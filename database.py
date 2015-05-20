@@ -71,6 +71,8 @@ for row in rows:
 print "pandas loop example"
 print "The cities that are warmest in July are:"
 
-for i in range(0,len(df)):
-    print df.ix[i, 'name'] + ', ' + df.ix[i, 'state']
+#for i in range(0,len(df)):
+#    print df.ix[i, 'name'] + ', ' + df.ix[i, 'state']
+for index, row in df.iterrows():
+	print row['name'] + ', ' + row['state']
 
