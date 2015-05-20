@@ -49,15 +49,28 @@ with con:
 	cur.execute("SELECT name, state, warm_month FROM cities INNER JOIN weather ON name = city WHERE warm_month = 'July'")
 	rows = cur.fetchall()
 
+print "for loop, full rows:"
 print "The cities that are warmest in July are:"
-	
+
 for row in rows:
 	print row
 
-#	cols = [desc[0] for desc in cur.description]
-#	df = pd.DataFrame(rows, columns=cols)
-	
-#print "The cities that are warmest in July are:"
-#for (name, state) in rows:
-#print "%s" % name + ", %s" % state
+cols = [desc[0] for desc in cur.description]
+df = pd.DataFrame(rows, columns=cols)
+
+#i got this far then damian fixed the rest
+
+print "pandas df here:"
+print df
+
+print "for loop: name, state only:"
+print "The cities that are warmest in July are:"
+for row in rows:
+    print "%s" % row[0] + ", %s" % row[1]
+
+print "pandas loop example"
+print "The cities that are warmest in July are:"
+
+for i in range(0,len(df)):
+    print df.ix[i, 'name'] + ', ' + df.ix[i, 'state']
 
