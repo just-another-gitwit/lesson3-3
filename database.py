@@ -43,36 +43,49 @@ with con:
 	cur.execute("CREATE TABLE weather (city text, year integer, warm_month text, cold_month text, average_high integer)")
 	cur.executemany ("INSERT INTO weather VALUES (?, ?, ?, ?, ?)", weather)
 
-# join tables and print
+#ask user for month
+print "\n"
+type_of_weather = raw_input("Enter requested Month: ")
+
+#pass user-inputted month
+#into cur.execute SELECT statement
+
 with con:
 	cur = con.cursor()
-	cur.execute("SELECT name, state, warm_month FROM cities INNER JOIN weather ON name = city WHERE warm_month = 'July'")
+	cur.execute("SELECT name, state, warm_month FROM cities INNER JOIN weather ON name = city WHERE warm_month = ?", (type_of_weather,))
 	rows = cur.fetchall()
+	if len(rows) > 0:
+		print "\n" + "*Using pandas dataframe output*\n"
+		cols = [desc[0] for desc in cur.description]
+		df = pd.DataFrame(rows, columns=cols)
+		print df
+		print "\n"
+	else:
+		print "\n"
+		print "No cities have " + type_of_weather + " as a warm month."
 
-print "for loop, full rows:"
-print "The cities that are warmest in July are:"
+	if len(rows) > 0:
+		print "\n" + "*Using for loop: name, state only*\n"
+		for row in rows:
+			print "%s" % row[0] + ", %s" % row[1] + "\n"
 
-for row in rows:
-	print row
+# join tables and print
+#with con:
+#	cur = con.cursor()
+#	cur.execute("SELECT name, state, warm_month FROM cities INNER JOIN weather ON name = city WHERE warm_month = 'July'")
+#	rows = cur.fetchall()
 
-cols = [desc[0] for desc in cur.description]
-df = pd.DataFrame(rows, columns=cols)
 
-#i got this far then damian fixed the rest
+#print "for loop: name, state only:"
+#print "The cities that are warmest in July are:"
+#for row in rows:
+#    print "%s" % row[0] + ", %s" % row[1]
 
-print "pandas df here:"
-print df
-
-print "for loop: name, state only:"
-print "The cities that are warmest in July are:"
-for row in rows:
-    print "%s" % row[0] + ", %s" % row[1]
-
-print "pandas loop example"
-print "The cities that are warmest in July are:"
+#print "pandas loop example"
+#print "The cities that are warmest in July are:"
 
 #for i in range(0,len(df)):
 #    print df.ix[i, 'name'] + ', ' + df.ix[i, 'state']
-for index, row in df.iterrows():
-	print row['name'] + ', ' + row['state']
+#for index, row in df.iterrows():
+#	print row['name'] + ', ' + row['state']
 
