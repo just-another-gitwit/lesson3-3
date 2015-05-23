@@ -70,23 +70,3 @@ with con:
 		for row in rows:
 			print "%s" % row[0] + ", %s" % row[1] + "\n"
 
-# join tables and print
-#with con:
-#	cur = con.cursor()
-#	cur.execute("SELECT name, state, warm_month FROM cities INNER JOIN weather ON name = city WHERE warm_month = 'July'")
-#	rows = cur.fetchall()
-
-
-#print "for loop: name, state only:"
-#print "The cities that are warmest in July are:"
-#for row in rows:
-#    print "%s" % row[0] + ", %s" % row[1]
-
-#print "pandas loop example"
-#print "The cities that are warmest in July are:"
-
-#for i in range(0,len(df)):
-#    print df.ix[i, 'name'] + ', ' + df.ix[i, 'state']
-#for index, row in df.iterrows():
-#	print row['name'] + ', ' + row['state']
-
