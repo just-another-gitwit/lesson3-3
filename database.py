@@ -62,10 +62,11 @@ with con:
 		print "\n"
 	else:
 		print "\n"
-		print "No cities have " + type_of_weather + " as a warm month."
+		print "No cities have " + type_of_weather + " as the warmest month.\n"
 
 	if len(rows) > 0:
 		print "\n" + "*Using for loop: name, state only*\n"
+		print "The cities with " + type_of_weather + " as the warmest month include:\n"
 		for row in rows:
 			print "%s" % row[0] + ", %s" % row[1] + "\n"
 
